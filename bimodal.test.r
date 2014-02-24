@@ -18,8 +18,8 @@ cat(
     paste(
         "# file_in: ", "\t", file_in, "\n",   
         "# method: ",  "\t", method,  "\n",
-        "# var_filter", "\t", var_filter, "\n",
-        "# max_mix_proportion: ", "\t", max_mix_proportion,"\n",
+        "# var_filter", "\t", var_filter, "\t", "probably needs tweaking", "\n",
+        "# max_mix_proportion: ", "\t", max_mix_proportion, "\t", "probably needs tweaking","\n",
          sep="",collapse=""
         ),
     file=file_out
