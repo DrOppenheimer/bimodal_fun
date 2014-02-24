@@ -1,0 +1,20 @@
+# file_in: 	test_data.txt
+# method: 	npEM
+# var_filter	1.5
+# primary_proportion: 	0.95
+""	"var"	"max_portion"	"min_portion"	"modality_guess"	"guess_on"
+"bimodal_test1"	"79700.3333333333"	"0.833333333333333"	"0.166666666666667"	"2 or more"	"primary_proportion"
+"bimodal_test2"	"1896652.24242424"	"0.887053342243464"	"0.112946657756536"	"2 or more"	"primary_proportion"
+"bimodal_test3"	"6078.06060606061"	"0.916666666666667"	"0.0833333333333333"	"2 or more"	"primary_proportion"
+"bimodal_test4"	"3234.08333333333"	"0.916666668360038"	"0.0833333316399619"	"2 or more"	"primary_proportion"
+"bimodal_test5"	"8213.78787878788"	"0.833333333333333"	"0.166666666666667"	"2 or more"	"primary_proportion"
+"bimodal_test6"	"4760.08333333333"	"0.916666668360038"	"0.0833333316399619"	"2 or more"	"primary_proportion"
+"bimodal_test7"	"850894.386363636"	"0.785700287750264"	"0.214299712249736"	"2 or more"	"primary_proportion"
+"bimodal_test8"	"255592.727272727"	"0.75"	"0.25"	"2 or more"	"primary_proportion"
+"bimodal_test9"	"6909.60606060606"	"0.75"	"0.25"	"2 or more"	"primary_proportion"
+"bimodal_test10"	"5924.56818181818"	"0.916666666666667"	"0.0833333333333333"	"2 or more"	"primary_proportion"
+"bimodal_test11"	"1792.33333333333"	"0.75"	"0.25"	"2 or more"	"primary_proportion"
+"unimodal_test1"	"0.386363636363636"	"NA"	"NA"	"1"	"var_filter"
+"unimodal_test2"	"0.568181818181818"	"NA"	"NA"	"1"	"var_filter"
+"unimodal_test3"	"0.628787878787879"	"NA"	"NA"	"1"	"var_filter"
+"unimodal_test4"	"1.35606060606061"	"NA"	"NA"	"1"	"var_filter"
