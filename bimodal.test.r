@@ -1,4 +1,4 @@
-bimodal.test <- function(file_in="test_data.txt", primary_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt"){
+bimodal.test <- function(file_in="test_data.txt", max_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt"){
 
 # supported methods, npEM, spEM, #normalmixEM#
 # require necessary package
@@ -12,14 +12,14 @@ require(mixtools)||install.packages("mixtools")
 # The non parametric EM seems to tolerate sparse count data reasoanbly well
 
 # with mu0 = 2
-# decides if data are unimodal or bimodal + based on primary mix proportion
+# decides if data are unimodal or bimodal + based on max mix proportion
 
 cat(
     paste(
         "# file_in: ", "\t", file_in, "\n",   
         "# method: ",  "\t", method,  "\n",
         "# var_filter", "\t", var_filter, "\n",
-        "# primary_mix_proportion: ", "\t", primary_mix_proportion,"\n",
+        "# max_mix_proportion: ", "\t", max_mix_proportion,"\n",
          sep="",collapse=""
         ),
     file=file_out
@@ -49,12 +49,12 @@ for (i in 1:num_rows){
             my_npEM <- npEM(my_data[i,], mu0=2, verb=FALSE)
             my_lambdahat <- sort(my_npEM$lambdahat,decreasing=TRUE)
             output[i,2:3] <- my_lambdahat
-            if  ( my_lambdahat[1] >= primary_mix_proportion ){
+            if  ( my_lambdahat[1] >= max_mix_proportion ){
                 output[i,4] <- "1"
-                output[i,5] <- "primary_mix_proportion"
+                output[i,5] <- "max_mix_proportion"
             } else {
                 output[i,4] <- "2 or more"
-                output[i,5] <- "primary_mix_proportion"
+                output[i,5] <- "max_mix_proportion"
             }
         }
 
@@ -62,12 +62,12 @@ for (i in 1:num_rows){
             my_spEM <- spEM(my_data[i,], mu0=2, verb=FALSE)
             my_lambdahat <- sort(my_spEM$lambdahat,decreasing=TRUE)
             output[i,2:3] <- my_lambdahat
-            if  ( my_lambdahat[1] >= primary_mix_proportion ){
+            if  ( my_lambdahat[1] >= max_mix_proportion ){
                 output[i,4] <- "1"
-                output[i,5] <- "primary_mix_proportion"
+                output[i,5] <- "max_mix_proportion"
             } else {
                 output[i,4] <- "2 or more"
-                output[i,5] <- "primary_mix_proportion"
+                output[i,5] <- "max_mix_proportion"
             }
         }
 
@@ -78,7 +78,7 @@ for (i in 1:num_rows){
         #    my_normalmixEM <- normalmixEM(my_data[i,], k=2, verb=FALSE)
         #    my_lambda <- sort(my_normalmixEM$lambda,decreasing=TRUE)
         #    output[i,2:3] <- my_lambda
-        #    if  ( my_lambda[1] >= primary_proportion ){
+        #    if  ( my_lambda[1] >= max_proportion ){
         #        output[i,1] <- "1"
         #    } else {
         #        output[i,1] <- "2 or more"
