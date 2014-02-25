@@ -1,7 +1,7 @@
 # file_in: 	test_data.txt
 # method: 	npEM
-# var_filter	1.5
-# max_mix_proportion: 	0.95
+# var_filter	1.5	probably needs tweaking
+# max_mix_proportion: 	0.95	probably needs tweaking
 ""	"var"	"max_proportion"	"min_proportion"	"modality_guess"	"guess_on"
 "bimodal_test1"	"79700.3333333333"	"0.833333333333333"	"0.166666666666667"	"2 or more"	"max_mix_proportion"
 "bimodal_test2"	"1896652.24242424"	"0.887053342243464"	"0.112946657756536"	"2 or more"	"max_mix_proportion"
