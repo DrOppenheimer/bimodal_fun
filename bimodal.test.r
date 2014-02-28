@@ -25,54 +25,65 @@ cat(
     file=file_out
     )
 
-my_data <<- as.matrix(read.table(file_in, row.names=1, header=FALSE, sep="\t", comment.char="", quote="", check.names=FALSE))
+my_data <<- as.matrix(read.table(file_in, row.names=1, header=FALSE, sep="\t", comment.char="", quote="", check.names=FALSE, fill=TRUE))
 
 num_rows <- nrow(my_data)
 num_cols <- ncol(my_data)
 
-output <- matrix("", num_rows, 5)
+output <- matrix("", num_rows, 6)
 dimnames(output)[[1]] <- dimnames(my_data)[[1]]
-dimnames(output)[[2]] <- c("var", "max_proportion", "min_proportion", "modality_guess", "guess_on")
+dimnames(output)[[2]] <- c("length", "var", "max_proportion", "min_proportion", "modality_guess", "guess_on")
 
 for (i in 1:num_rows){
 
     print(paste("processing row ( ", i, " ) of ",num_rows," rows",sep="",collapse=""))
-   
-    output[i,1] <- var(my_data[i,])
-    if ( var(my_data[i,])<= var_filter ){
-        output[i,2:3] <- rep("NA",2)
-        output[i,4] <- "1"
-        output[i,5] <- "var_filter"
+
+    length_i <- sum(!is.na(my_data[i,]))
+    output[i,1] <- length_i
+    
+    my_var <- var(my_data[i,1:length_i])
+    output[i,2] <- my_var
+
+    if ( length_i < 3 ){
+
+      output[i,3:6]<-NA
+
     }else{
-
+    
+      if ( my_var <= var_filter ){
+        output[i,3:4] <- rep("NA",2)
+        output[i,5] <- "1"
+        output[i,6] <- "var_filter"
+      }else{
+        
         if ( identical( method, "npEM" ) ){
-            my_npEM <- npEM(my_data[i,], mu0=2, verb=FALSE)
-            my_lambdahat <- sort(my_npEM$lambdahat,decreasing=TRUE)
-            output[i,2:3] <- my_lambdahat
-            if  ( my_lambdahat[1] >= max_mix_proportion ){
-                output[i,4] <- "1"
-                output[i,5] <- "max_mix_proportion"
-            } else {
-                output[i,4] <- "2 or more"
-                output[i,5] <- "max_mix_proportion"
-            }
+          my_npEM <- npEM(my_data[i,1:length_i], mu0=2, verb=FALSE)
+          my_lambdahat <- sort(my_npEM$lambdahat,decreasing=TRUE)
+          output[i,3:4] <- my_lambdahat
+          if  ( my_lambdahat[1] >= max_mix_proportion ){
+            output[i,5] <- "1"
+            output[i,6] <- "max_mix_proportion"
+          } else {
+            output[i,5] <- "2 or more"
+            output[i,6] <- "max_mix_proportion"
+          }
         }
-
+        
         if ( identical( method, "spEM" ) ){
-            my_spEM <- spEM(my_data[i,], mu0=2, verb=FALSE)
-            my_lambdahat <- sort(my_spEM$lambdahat,decreasing=TRUE)
-            output[i,2:3] <- my_lambdahat
-            if  ( my_lambdahat[1] >= max_mix_proportion ){
-                output[i,4] <- "1"
-                output[i,5] <- "max_mix_proportion"
-            } else {
-                output[i,4] <- "2 or more"
-                output[i,5] <- "max_mix_proportion"
-            }
+          my_spEM <- spEM(my_data[i,1:length_i], mu0=2, verb=FALSE)
+          my_lambdahat <- sort(my_spEM$lambdahat,decreasing=TRUE)
+          output[i,3:4] <- my_lambdahat
+          if  ( my_lambdahat[1] >= max_mix_proportion ){
+            output[i,5] <- "1"
+            output[i,6] <- "max_mix_proportion"
+          } else {
+            output[i,5] <- "2 or more"
+            output[i,6] <- "max_mix_proportion"
+          }
         }
-
-
-
+        
+      }
+      
 
         #if ( identical( method, "normalmixEM" ) ){
         #    my_normalmixEM <- normalmixEM(my_data[i,], k=2, verb=FALSE)
