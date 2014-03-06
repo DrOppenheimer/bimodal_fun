@@ -99,7 +99,7 @@ for (i in 1:num_rows){
             output[i,5] <- "2 or more"
             output[i,6] <- "max_mix_proportion"
           }
-        }
+        
 
         if ( produce_hists==TRUE){
             png(
@@ -112,7 +112,9 @@ for (i in 1:num_rows){
             plot(my_spEM, xlab=paste( dimnames(output)[[1]][i], ".histogram.png", sep="", collapse=""))
             dev.off()    
           }
-        
+          
+        }
+          
       }
       
 
