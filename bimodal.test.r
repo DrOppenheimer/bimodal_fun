@@ -1,4 +1,4 @@
-bimodal.test <- function(file_in="test_data.txt", max_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt", produce_hists=TRUE){
+bimodal.test <- function(file_in="test_data.txt", max_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt", produce_hists=FALSE){
 
 # supported methods, npEM, spEM, #normalmixEM#
 # require necessary package
