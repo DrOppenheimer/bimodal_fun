@@ -1,4 +1,4 @@
-bimodal.test <- function(file_in="test_data.txt", max_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt"){
+bimodal.test <- function(file_in="test_data.txt", max_mix_proportion=0.95, var_filter=1.5, method="npEM",file_out="bimodal.test.output.txt", produce_hists=TRUE){
 
 # supported methods, npEM, spEM, #normalmixEM#
 # require necessary package
@@ -34,6 +34,12 @@ output <- matrix("", num_rows, 6)
 dimnames(output)[[1]] <- dimnames(my_data)[[1]]
 dimnames(output)[[2]] <- c("length", "var", "max_proportion", "min_proportion", "modality_guess", "guess_on")
 
+if ( produce_hists==TRUE ){
+  hists_dir <- paste(getwd(), "/histograms", sep="", collapse="" )
+  dir.create(hists_dir)
+}
+
+
 for (i in 1:num_rows){
 
     print(paste("processing row ( ", i, " ) of ",num_rows," rows",sep="",collapse=""))
@@ -57,7 +63,7 @@ for (i in 1:num_rows){
       }else{
         
         if ( identical( method, "npEM" ) ){
-          my_npEM <- npEM(my_data[i,1:length_i], mu0=2, verb=FALSE)
+          my_npEM <<- npEM(my_data[i,1:length_i], mu0=2, verb=FALSE)
           my_lambdahat <- sort(my_npEM$lambdahat,decreasing=TRUE)
           output[i,3:4] <- my_lambdahat
           if  ( my_lambdahat[1] >= max_mix_proportion ){
@@ -67,6 +73,19 @@ for (i in 1:num_rows){
             output[i,5] <- "2 or more"
             output[i,6] <- "max_mix_proportion"
           }
+
+          if ( produce_hists==TRUE){
+            png(
+                filename = paste( hists_dir, "/", dimnames(output)[[1]][i], ".histogram.png", sep="", collapse=""),
+                width = 6,
+                height = 3,
+                res = 150,
+                units = 'in'
+                )
+            plot(my_npEM, xlab=paste( dimnames(output)[[1]][i], ".histogram.png", sep="", collapse=""))
+            dev.off()    
+          }
+          
         }
         
         if ( identical( method, "spEM" ) ){
@@ -81,6 +100,18 @@ for (i in 1:num_rows){
             output[i,6] <- "max_mix_proportion"
           }
         }
+
+        if ( produce_hists==TRUE){
+            png(
+                filename = paste( hists_dir, "/", dimnames(output)[[1]][i], ".histogram.png", sep="", collapse=""),
+                width = 6,
+                height = 3,
+                res = 150,
+                units = 'in'
+                )
+            plot(my_spEM, xlab=paste( dimnames(output)[[1]][i], ".histogram.png", sep="", collapse=""))
+            dev.off()    
+          }
         
       }
       
